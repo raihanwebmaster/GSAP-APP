@@ -1,20 +1,36 @@
-import { useGSAP } from "@gsap/react"
-import gsap from "gsap"
-import { rightImg, watchImg } from "../utils"
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { rightImg, watchImg } from "../utils";
+import VideoCarousel from "./VideoCarousel";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Highlights = () => {
   useGSAP(() => {
     gsap.to("#title", {
       opacity: 1,
-      y: 0
-    })
-    gsap.to(".link", {
-      opacity: 1, 
       y: 0,
-      duration: 1 ,
-      stagger: 0.25
-    })
-  }, [])
+      scrollTrigger: {
+        trigger: "#title",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      }
+    });
+    gsap.to(".link", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.25,
+      scrollTrigger: {
+        trigger: "#hightligts",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      }
+    });
+  }, []);
+
   return (
     <section id="hightligts" className="w-screen overflow-hidden h-full common-padding bg-zine">
       <div className="screen-max-width">
@@ -31,9 +47,10 @@ const Highlights = () => {
             </p>
           </div>
         </div>
+        <VideoCarousel/>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Highlights
+export default Highlights;
